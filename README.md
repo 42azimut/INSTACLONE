@@ -49,4 +49,14 @@ ___
   ### 2) 데이터 베이스 생성
   `create database instaclone`
   
+  ### 3) 유저 생성 및 설정
+  `create user ______(username) with password '____';`
+  
+  #### (1) 유저 인코딩 utf-8
+  `alter role (username) set clinet-encoding to 'utf-8';`
+  #### (2) 서울 기준 시간
+  `alter role (username) set timezone to Asia/Seoul';`
+  #### (3) instaclone 이라는 database의 권한을 username에게 부여
+  `grant all privileges on databases instaclone to (username);`
+  
   
