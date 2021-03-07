@@ -28,7 +28,7 @@ ___
   3) `django-admin startproject config .`
 ___
 ## 04. PostgreSQL  
-  1) 설치
+  ### 1) 설치
   ```
   # apt-get 업댓
   apt-get update
@@ -46,7 +46,7 @@ ___
   su - postgres
   ```
   
-  2) 데이터 베이스 생성
+  ### 2) 데이터 베이스 생성
   `create database instaclone`
   
   
