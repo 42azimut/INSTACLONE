@@ -54,6 +54,8 @@ ___
   #실행
   brew services start postgresql
 
+  brew services restart postgresql
+
   # 슈퍼유저 접속 <<< 여기서 에러 >>>
   su - postgres
 
@@ -66,6 +68,11 @@ ___
   #확인
   \l
 
+  # 슈퍼유저로 접속 
+  su - azimut_mac
+
+  # 유저네임으로 인스타클론 디비에 접속 
+  psql -U azimut -d instaclone
 
   ```
   
