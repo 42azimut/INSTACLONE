@@ -28,7 +28,7 @@ ___
   3) `django-admin startproject config .`
 ___
 ## 04. PostgreSQL  
-  ### 1) 설치
+  ### 1) 리눅스로 설치
   ```
   # apt-get 업댓
   apt-get update
@@ -45,18 +45,45 @@ ___
   # 접속(슈퍼유저)
   su - postgres
   ```
+
+  ### 1-1) 맥에서 설치 (homebrew 잘 안되는데... 그냥 앱으로 설치 해야 할듯!)
+  ```
+  #설치
+  brew install postgresql
+
+  #실행
+  brew services start postgresql
+
+  # 슈퍼유저 접속 <<< 여기서 에러 >>>
+  su - postgres
+
+  #성공#
+  psql -d postgres -U azimut_mac
+
+  #데이터 베이스 생성
+  create database instaclone;
+
+  #확인
+  \l
+
+
+  ```
   
   ### 2) 데이터 베이스 생성
   `create database instaclone`
   
   ### 3) 유저 생성 및 설정
   `create user ______(username) with password '____';`
+  `create user azimut with password '1111';`
   
   #### (1) 유저 인코딩 utf-8
-  `alter role (username) set clinet-encoding to 'utf-8';`
+  `alter role (username) set client_encoding to 'utf-8';`
+
   #### (2) 서울 기준 시간
   `alter role (username) set timezone to Asia/Seoul';`
+  
   #### (3) instaclone 이라는 database의 권한을 username에게 부여
   `grant all privileges on databases instaclone to (username);`
   
-  
+  #### (4) 인스타클론 이라는 데이터 베이스의 오너를 유저네임(aizmut) 으로 변경 명려어
+  `ALTER DATABASE instaclone OWNER TO azimut;`
