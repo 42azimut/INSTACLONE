@@ -27,26 +27,9 @@ ___
   2) 설정파일이 들어 잇는 폴더 생성하면서 프로젝트 생성. (점)은 현재 폴더에 프로젝트를 생성 의미!
   3) `django-admin startproject config .`
 ___
-## 04. PostgreSQL  
-  ### 1) 리눅스로 설치
-  ```
-  # apt-get 업댓
-  apt-get update
-  
-  # 설치
-  apt-get install postgresql
-  
-  #실행
-  service postgresql start
-  
-  #작동확인
-  ps -ef|grep postgres
-  
-  # 접속(슈퍼유저)
-  su - postgres
-  ```
-
-  ### 1-1) 맥에서 설치 (homebrew 잘 안되는데... 그냥 앱으로 설치 해야 할듯!)
+## 04. PostgreSQL  (설치 까다로움 주의 : 검색 할것!)
+ 
+  ### 1-1) 맥에서 설치 (homebrew 설치 했으나, 몇가지 잘 안됨. 그냥 gui?? 앱으로 설치 해야 할듯!)
   ```
   #설치
   brew install postgresql
@@ -76,6 +59,24 @@ ___
 
   ```
   
+  ### 1-2) 리눅스로 설치
+  ```
+  # apt-get 업댓
+  apt-get update
+  
+  # 설치
+  apt-get install postgresql
+  
+  #실행
+  service postgresql start
+  
+  #작동확인
+  ps -ef|grep postgres
+  
+  # 접속(슈퍼유저)
+  su - postgres
+  ```
+ 
   ### 2) 데이터 베이스 생성
   `create database instaclone`
   
