@@ -95,3 +95,29 @@ ___
   
   #### (4) 인스타클론 이라는 데이터 베이스의 오너를 유저네임(aizmut) 으로 변경 명려어
   `ALTER DATABASE instaclone OWNER TO azimut;`
+  
+  ## 3. 장고에 PostgreSQL 연결
+  #### 1) 가상환경 활성
+  - `source venv/bin/activate`
+
+  #### 2) setting 
+  - config/settings.py
+  ```
+  'ENGINE': 'djsngo.db.backends.postgresql'. 
+    ...
+  ```
+
+  #### 3) migrate
+    - psycopg2 에러? 
+    - 설치
+    - `pip install psycopg2-binary`
+    - `pip install django-imagekit`
+    - `pip install pillow`
+  
+  
+
+
+
+
+
+  
