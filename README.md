@@ -108,12 +108,13 @@ ___
   ```
 
   #### 3) migrate
+  ```
     - psycopg2 에러? 
     - 설치
-    - `pip install psycopg2-binary`
-    - `pip install django-imagekit`
-    - `pip install pillow`
-  
+    - pip install psycopg2-binary
+    - pip install django-imagekit
+    - pip install pillow
+  ```
   
 
 
