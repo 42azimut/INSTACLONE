@@ -1,4 +1,4 @@
-# instaclone 
+# INSTACLONE 
 
 ## 01. 설치 및 일반
 1) Frontend
