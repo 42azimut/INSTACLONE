@@ -185,5 +185,9 @@ GENDER_C = (
   arr = [choice(string.ascii_letters) for _ in range(8)]
 
 # 이어 붙이기
-    pid = ''.join(arr)
+  pid = ''.join(arr)
+
+# 파일 확장자명을 분리해서 저장
+  extenstion = filename.split('.')[-1]  
 ```
+- 결과적으로 accoutns/username/random.확장자명 같은 파일 경로 문자열을 반환
