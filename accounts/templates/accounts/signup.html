@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="main_container">
+    <div class="form_container">
+        <div class="form">
+            <form action="" method="post" enctype="mulipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="submit_btn" value="가입">
+            </form>
+        </div>
+
+        <div class="bottom_box">
+            <div>
+                <span>아이디가 없으신가요?</span><a href="{% url 'accounts:login' %}">로그인</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

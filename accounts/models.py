@@ -5,7 +5,7 @@ from imagekit.processors import ResizeToFill # 이미지킷에서 리사이즈 �
 
 
 # Create your models here.
-def user_path(instance, filenmae):
+def user_path(instance, filename):
     from random import choice
     import string
 

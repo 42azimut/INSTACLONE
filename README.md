@@ -191,3 +191,102 @@ GENDER_C = (
   extenstion = filename.split('.')[-1]  
 ```
 - 결과적으로 accoutns/username/random.확장자명 같은 파일 경로 문자열을 반환
+
+## 007 accounts admin 
+  1) admin. py 모델 등록
+  2) admin 페이지 접속
+  3) admin 유저 생성
+  4) admin 페이지에서 객체 생성하기
+
+### 1) admin.py 모델 등록
+- 데코레이터를 이용해서 클래스 만듬
+`@admin.register(Profile)`
+- admin 관련해서 미리 정해진 옵션들이 저장된 것을 사용!
+- 어떤 리스트 보여줄지 적는다!
+- 닉네임을 통해 유저를 검색 할수 있는 검색창 만듬
+`search_fields = 'nickname'`
+
+### 2) admin 페이지 접속
+
+### 3) admin 유저 생성
+`python manage.py createsuperuser`
+- run server again
+
+### 4) admin 페이지에서 객체 생성하기
+-클래스 이름은 Profile 단수형인데, 어드민 페이지에서는 "자동으로" 복수형 이다.
+
+# 008 프론트엔드 협업
+
+# 009 static: 프론트 엔드 예제파일업로드
+
+# 010 template : 기본 layout
+
+# 011  회원가입 | 로그인 | 로그아웃
+- url 짚고 넘어가기
+- 만약 아래와 같이 패스 adm 라고 바꾸면 어떻게 될까?
+```
+urlpatterns = [
+    path('adm/', admin.site.urls),
+]
+```
+- 주소:8000/adm 으로 접속 된다! 설정을 여기서 달리 할수 있다!
+
+### 1) config/urls.py
+
+### 2) accounts/urls.py
+- signup. login_checkout, logout 기능은 views.py 에서 정의! 함수명!
+- accounts/signup 등 연결된다! 
+
+### 3) accounts/views.py 
+- views.py는 사용자가 url을 통해 접근했을때 구체적으로 어떤 일을 수행 하는지 명령하는 곳!
+- authenticate 인증기능
+- redirect 로그인 했을시 어떤 페이지로 보낼때
+- render  template을 랜더링 하는 기능
+- form을 정의해서 사용하기 때문에 따로 파일을 만들어서 불러온다!
+
+### 4) 회원가입 함수, 로그인, 로그아웃 
+```
+# 함수형 뷰 : 회원가입
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save()
+            return redirect('accounts:login')
+    else:
+        form = SignupForm()
+    
+    return render(request, 'accounts/signup.html', {
+        'form':form,
+        })
+```
+- 처음에 요청이 포스트 방식인지 확인! 
+- 포스트 방식이면 forms.py에서 정의한 SignupForm을 가져오고, form 갑이 제대로 채워지면 저장! 
+- 저장후 로그인 페이지로 리다이렉트(이동시킴)
+- 포스트방식이 아니면, 회원가입 페이지를 다시 렌더링!
+
+```
+def login_check(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect
+    else:
+        form = AuthenticationForm()
+    
+    return render(request, 'accounts/login.html', {'form':form}) 
+```
+- POST 요청으로 받은 계정과 비번을 가지고 유저인지 확인. 유저이면 로그인하고 루트url (/) 이동 >> redirect 아무것도 안쓰면 됨!
+- 유저 아니면 로그인 페이지 다시 랜더링! 이때 폼 에러 메시지 담겨 있기 때문에 같이 렌더링!
+- 만약 포스트 요청이 아니면 로그인 페이지를 렌더링!
+
+- 로그아웃은 django_logout 시키면 끝! 그리고 루트로 이동!
+
+### 5) forms 
+- username 될수 있는 조건설정! 
+- meta 클래스 추가. Meta는 SignupForm의 내부 클래스.
+- fields 변수에 회원가입폼에서 보여줄 필드를 설정! 
+- Meta 클래스를 이용하면 정렬옵션, 데이터베이스 테이블 이름등의 모델 단위의 옵션을 정할수 있다. 
+
