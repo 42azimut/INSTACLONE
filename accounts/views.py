@@ -22,7 +22,8 @@ def signup(request):
 
 def login_check(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST, request.FILES)
+        form = AuthenticationForm(request, request.FILES)
+        
         if form.is_valid():
             user = form.get_user()
             login(request, user)

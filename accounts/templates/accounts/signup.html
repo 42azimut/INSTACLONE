@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'accounts/layout.html' %}
 
 {% load static %}
 
@@ -19,7 +19,7 @@
 
         <div class="bottom_box">
             <div>
-                <span>아이디가 없으신가요?</span><a href="{% url 'accounts:login' %}">로그인</a>
+                <span>아이디가 있다면?</span><a href="{% url 'accounts:login' %}">로그인</a>
             </div>
         </div>
     </div>

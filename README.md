@@ -290,3 +290,62 @@ def login_check(request):
 - fields 변수에 회원가입폼에서 보여줄 필드를 설정! 
 - Meta 클래스를 이용하면 정렬옵션, 데이터베이스 테이블 이름등의 모델 단위의 옵션을 정할수 있다. 
 
+
+# 012 메인 화면
+```
+1. post app 만들기
+2. 포스트 모델 작성
+3. 어드민 포스트 모델 등록
+4. 디비에 모델 등록 확인
+5. urls.py 수정
+6. views.py
+7. Template 작성
+  1) layout.html 수정
+8. post_list.html 작성
+  1) layout 설정
+```
+
+## 1. post app 만들기
+`python manage.py startapp post`
+
+```
+class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    photo = ProcessImageField(upload_to=photo_path, processors=[ResizeToFill(600, 600)],
+                                formawt='JPEG',
+                                options={'quality': 90})
+    content = models.CharField(max_length=140, help_text="최대 140자 입력 가능")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.content
+    
+```
+- 유저 모델 불러와서 author에 저장
+- ProcessedImageField 기능 활용, 사진 저장 경로==photo_path 함수 사용
+- 리사이즈, 콘텐츠 140 길이 제한, 등등
+- Meta 생성 시간 기준으로 정렬
+
+```
+# post/models.py
+def photo_path(instance, filename):
+...
+...
+
+# post/admin.py
+
+```
+
+
+## 5 urls.py 수정
+`path('post/', include('post.urls', namespace='post'))`
+`path('', lambda r:redirect('post:post_list', name='root'))`
+- 'post/' url 과 post 폴더의 ulrs.py 를 연결
+- 그리고 루트 url로 접근할때도 post로 연결
+- post 폴더에 urls.py 를 생성 및 작성
+
+## 6. views.py
