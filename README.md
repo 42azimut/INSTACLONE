@@ -1,7 +1,3 @@
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=42azimut)](https://github.com/anuraghazra/github-readme-stats)
-
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=42azimut&repo=github-readme-stats)](https://github.com/anuraghazra/github-readme-stats)
-
 # instaclone 
 
 ## 01. 설치 및 일반
