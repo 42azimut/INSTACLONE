@@ -349,3 +349,13 @@ def photo_path(instance, filename):
 - post 폴더에 urls.py 를 생성 및 작성
 
 ## 6. views.py
+
+
+
+
+### 5. 이미지 미리 보기
+- 자바스크립트로 구현
+- cnavas 활용하여 미리 보기 구현
+- html element 하나 가져온다. id_photo 라고 하는 id 값을 가진 요소를 가지고 온다. form.as_p 로 렌더링된 이미지 필드의 input 태그이다.
+  - 장고 Form을 HTML에 렌더링 시 , 각  필드의 id값은 ##id_필드명## 형식으로 자동으로 추가 된다. 
+  - 그래서 PostForm의 photo필드는 id_photo 라는 id 값을 가진 input 태그가 된다. 

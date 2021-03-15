@@ -3,6 +3,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
+from django.contrib import messages
+import json
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse
+
 
 # Create your views here.
 def post_list(request):
@@ -47,10 +52,10 @@ def post_edit(request, pk):
         return redirect('post:post_list')
     
     if request.method == 'POST':
-        form = PostForm(request.POST, request,FILES, instance=post)
-        if form.is_valie():
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
             post = form.save()
-            #post.tag_set.cleawr()
+            #post.tag_set.clear()
             #post.tag_save()
             messages.success(request, '수정완료')
             return redirect('post:post_list')
@@ -70,3 +75,39 @@ def post_delete(request, pk):
         post.delete()
         #messages.success(request, '삭제완료')
     return redirect('post:post_list')
+
+@login_required
+@require_POST
+def post_like(request):
+    pk = request.POST.get('pk', None)
+    post = get_object_or_404(Post, pk=pk)
+    post_like, post_like_created = post.like_set.get_or_create(user=request.user)
+
+    if not post_like_created:
+        post_like.delete()
+        message = "좋아요 취소"
+    else:
+        message = "좋아요"
+    
+    context = {'like_count': post.like_count,
+                'message': message}
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@login_required
+@require_POST
+def post_bookmark(request):
+    pk = request.POST.get('pk', None)
+    post = get_object_or_404(Post, pk=pk)
+    post_bookmark, post_bookmark_created = post.bookmark_set.get_or_create(user=request.user)
+
+    if not post_bookmark_created:
+        post_bookmark.delete()
+        message = "북마크 취소"
+    else:
+        message = "북마크"
+
+    context = {'bookmark_count': post.bookmark_count,
+               'message': message}
+
+    return HttpResponse(json.dumps(context), content_type="application/json") 
