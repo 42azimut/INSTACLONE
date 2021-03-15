@@ -1,3 +1,6 @@
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=42azimut)](https://github.com/anuraghazra/github-readme-stats)
+
+
 # instaclone 
 
 ## 01. 설치 및 일반
@@ -359,3 +362,10 @@ def photo_path(instance, filename):
 - html element 하나 가져온다. id_photo 라고 하는 id 값을 가진 요소를 가지고 온다. form.as_p 로 렌더링된 이미지 필드의 input 태그이다.
   - 장고 Form을 HTML에 렌더링 시 , 각  필드의 id값은 ##id_필드명## 형식으로 자동으로 추가 된다. 
   - 그래서 PostForm의 photo필드는 id_photo 라는 id 값을 가진 input 태그가 된다. 
+
+
+# 013 좋아요
+
+# 014 북마크
+
+# 015 댓글
