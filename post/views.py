@@ -13,20 +13,25 @@ from django.http import HttpResponse
 def post_list(request, tag=None):
     posts = Post.objects.all()
     comment_form = CommentForm()
+    post_list = Post.objects.all()
 
     if request.user.is_authenticated:
         username = request.user
         user = get_object_or_404(get_user_model(), username=username)
         user_profile = user.profile
+        following_set = request.user.profile.get_following
+        following_post_list = Post.objects.filter(author__profile__in=following_set)
+        
         return render(request, 'post/post_list.html', {
             'user_profile': user_profile,
             'posts': posts,
+            'following_post_list': following_post_list,
             'comment_form': comment_form,
         })
     else:
         return render(request, 'post/post_list.html', {
-            'posts': posts,
             'comment_form': comment_form,
+            'posts': post_list,
         })
     
 
@@ -163,4 +168,5 @@ def comment_delete(request):
         status = 0
         
     return HttpResponse(json.dumps({'message': message, 'status': status, }), content_type="application/json")
+
 
