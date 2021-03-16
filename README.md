@@ -366,3 +366,8 @@ def photo_path(instance, filename):
 # 014 북마크
 
 # 015 댓글
+
+# 016 팔로우 **주의**
+- 프로필 모델은 accounts/models.py 애서 작업!!!
+- Profile 모델에 ManyToManyField 사용!
+- p261 오타 : accounts/models.py 에서 작업 해야 함! 
