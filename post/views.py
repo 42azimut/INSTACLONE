@@ -24,7 +24,7 @@ def post_list(request, tag=None):
         
         return render(request, 'post/post_list.html', {
             'user_profile': user_profile,
-            'posts': posts,
+            'posts': post_list,
             'following_post_list': following_post_list,
             'comment_form': comment_form,
         })

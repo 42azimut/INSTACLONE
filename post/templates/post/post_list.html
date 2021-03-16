@@ -203,15 +203,18 @@
                         <div class="more">모두 보기</div>
                     </header>
 
+                    {% for post in posts %}
+
                     <div class="thumb_user">
                         <div class="profile_thumb">
-                            <img src="imgs/thumb02.jpg" alt="프로필사진">
+                            <img src="{{ post.photo.url }}" alt="프로필사진">
                         </div>
                         <div class="detail">
-                            <div class="id">kind_tigerrrr</div>
-                            <div class="time">1시간 전</div>
+                            <div class="id">{{ post.content }}</div>
+                            <div class="time">{{ post.updated_at | timesince }}</div>
                         </div>
                     </div>
+                    {% endfor %}
                 </article>
             </div>
         </div>
