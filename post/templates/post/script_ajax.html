@@ -191,8 +191,6 @@
         function callMorePostAjax(page) {
             var end_page = {{ posts.paginator.num_pages }};
             
-            
-            
             if(page > end_page){
                 return;
             }
@@ -212,13 +210,9 @@
         }
      
         function addMorePostAjax(data, textStatus, jqXHR) {
-        let post = document.querySelector('#post_list_ajax');
-            
+            let post = document.querySelector('#post_list_ajax');
             post.insertAdjacentHTML("beforeend", data);
-            
-            
         }
-    
     
         window.addEventListener('resize', resizefunc);
         window.addEventListener('scroll', scrollfunc);
