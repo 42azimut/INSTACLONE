@@ -72,15 +72,15 @@
                 
                 {% if user.is_authenticated %}
                 
-                <div class="sprite_user_icon_outline">
-                    <a href="#"></a>
-                </div>
+                    <div class="sprite_user_icon_outline">
+                        <a href="#"></a>
+                    </div>
                 
                 {% else %}
                 
-                <div class="sprite_user_icon_outline">
-                    <a href="{% url 'accounts:login' %}"></a>
-                </div>
+                    <div class="sprite_user_icon_outline">
+                        <a href="{% url 'accounts:login' %}"></a>
+                    </div>
                 
                 {% endif %}
             </div>

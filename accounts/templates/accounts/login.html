@@ -11,7 +11,7 @@
         <div class="form_container">
             <div class="form">
                 <h1 class="sprite_insta_big_logo title"></h1>
-                <form method="POST" action="{% url 'accounts:login' %}">
+                <form method="POST" action="{% url 'post:post_list' %}">
                     {% csrf_token %}
                      {{ form.as_p }}
                     <input type="submit" class="submit_btn" value="로그인">

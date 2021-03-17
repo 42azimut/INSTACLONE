@@ -1,15 +1,16 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import logout as django_logout
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from .models import Profile, Follow
+from django.contrib.auth.forms import AuthenticationForm
 
 import json
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-# 함수형 뷰 : 회원가입
+
 
 def signup(request):
     if request.method == 'POST':
@@ -25,25 +26,24 @@ def signup(request):
 
 def login_check(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
-        name = request.POST.get('username')
-        pwd = request.POST.get('password')
+        form = AuthenticationForm(request, request.POST)
+        # name = request.POST.get('username')
+        # pwd = request.POST.get('password')
         
-        user = authenticate(username=name, password=pwd)
+        #user = authenticate(username=name, password=pwd)
         
-        if user is not None:
+        if form.is_valid():
+            user = form.get_user()
             login(request, user)
             return redirect("/")
-        else:
-            return render(request, 'accounts/login_fail.html')
     else:
-        form = LoginForm()
-        return render(request, 'accounts/login.html', {"form":form})
+        form = AuthenticationForm()
+
+    return render(request, 'accounts/login.html', {"form":form})
     
 def logout(request):
     django_logout(request)
     return redirect("/")
-
 
 @login_required
 @require_POST
@@ -66,5 +66,16 @@ def follow(request):
         'status': status,
     }
     return HttpResponse(json.dumps(context), content_type="application/json")
-
-        
+    
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            

@@ -221,7 +221,7 @@ GENDER_C = (
 
 # 010 template : 기본 layout
 
-# 011  회원가입 | 로그인 | 로그아웃
+# 011  회원가입 | 로그인 | 로그아웃  **** 문서 오류 주의 특히 로그인 주소, 회원가입 주소 {% url 'accounts:login' %} ****
 - url 짚고 넘어가기
 - 만약 아래와 같이 패스 adm 라고 바꾸면 어떻게 될까?
 ```
@@ -378,3 +378,5 @@ def photo_path(instance, filename):
 
 # 018 무한 스크롤
 - p.281 : post_list를 posts 로 변경!!
+
+# 019 태그 검색
