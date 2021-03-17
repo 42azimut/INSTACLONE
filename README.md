@@ -366,6 +366,7 @@ def photo_path(instance, filename):
 # 014 북마크
 
 # 015 댓글
+- 오타 p.256 post/templates/post/post_list.html 
 
 # 016 팔로우 **주의**
 - 프로필 모델은 accounts/models.py 애서 작업!!!
