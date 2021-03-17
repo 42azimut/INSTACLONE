@@ -370,4 +370,11 @@ def photo_path(instance, filename):
 # 016 팔로우 **주의**
 - 프로필 모델은 accounts/models.py 애서 작업!!!
 - Profile 모델에 ManyToManyField 사용!
-- p261 오타 : accounts/models.py 에서 작업 해야 함! 
+- 오타 p261 : accounts/models.py 에서 작업 해야 함! 
+
+# 017 히든메뉴_사이드 박스
+- 오타 p272 : post/view.py 에서 리턴 'comment_form': comment_form 빠짐!
+
+
+# 018 무한 스크롤
+- p.281 : post_list를 posts 로 변경!!

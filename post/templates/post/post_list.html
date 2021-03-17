@@ -12,7 +12,11 @@
         {% for following in user.profile.get_following %}
         <div class="user">
             <div class="thumb_img">
-                <img src="{{ following.picture.url }}" alt="">
+                {% if following.picture %}
+                <img src="{{ following.picture.url }}" alt="{{ following.nickname }}의 프로필 이미지">
+                {% else %}
+                <img src="{% static 'imgs/thumb.jpeg' %}" alt="{{ following.nickname }}의 프로필 이미지">
+                {% endif %}
             </div>
             <div class="id">{{ following.nickname }}</div>
         </div>
@@ -43,7 +47,7 @@
                                     {% if post.author.profile.picture %}
                                         <img src="{{ post.author.profile.picture.url }}" alt="프로필이미지">
                                     {% else %}
-                                        <img src="{% static 'imgs/thumb.jpeg'  %}" alt="프로필이미지">
+                                        <img src="{% static 'imgs/thumb.jpeg' %}" alt="프로필이미지">
                                     {% endif %}
                                 </div>
                                 <div class="user_name">
@@ -73,15 +77,17 @@
                                     {% endif %}
 
                                 </li>
-                                {% if post.author == user %}
-                                    <li><a class="post-edit" href="{% url 'post:post_edit' post.pk %}">수정</a></li>
-                                    <li>
-                                        <form class="post-delete-form" action="{% url 'post:post_delete' post.pk %}" method="post">
-                                            {% csrf_token %}
-                                            <input type="submit" class="post-delete" value="삭제">
-                                        </form>
-                                    </li>
-                                {% endif %}
+                                    {% if post.author == user %}
+                                <li>
+                                    <a class="post-edit" href="{% url 'post:post_edit' post.pk %}">수정</a>
+                                </li>
+                                <li>
+                                    <form class="post-delete-form" action="{% url 'post:post_delete' post.pk %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="submit" class="post-delete" value="삭제">
+                                    </form>
+                                </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </header>
@@ -149,11 +155,11 @@
                             {% endif%}
                         </div>
                     </article>
-                
                 {% endfor %}
-
             </div>
 
+            <div id="post_list_ajax"></div>   <!-- post를 계속해 추가하는 코드-->
+            
             <input type="hidden" id="page" value="1">
 
             <div class="side_box">

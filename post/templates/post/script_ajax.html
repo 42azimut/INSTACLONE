@@ -1,7 +1,11 @@
 <script type="text/javascript">
     (function(){
         const delegation = document.querySelector('.contents_box');
-          
+        const side_box = document.querySelector('.side_box');
+        const header = document.querySelector('#header');
+        
+        
+        
         function delegationFunc(e) {
             let elem = e.target;
             
@@ -58,7 +62,6 @@
                         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                     },
                 });
-    
             }else if (elem.matches('[data-name="comment"]')){
                 console.log('새댓글')
                 var pk = elem.getAttribute('name');
@@ -74,6 +77,7 @@
                     alert("글자를 하나라도 넣어주세요. 현재 글자수 :"+content.length);
                     return;
                 }
+                
                 
                 $.ajax({
                     type: "POST",
@@ -93,7 +97,6 @@
                         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                     },
                 });
-                
             }else if(elem.matches('[data-name="comment_delete"]')){
                 var pk = elem.getAttribute('name');
     
@@ -112,16 +115,14 @@
                     },
                     error: function(request, status, error){
                         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    }, 
+                    } 
                 });
-
             }else if(elem.matches('[data-name="follow"]')){
-                console.log('팔로우');
-                
-                var pk = elem.getAttribute('name')
+                console.log("팔로우!");
+                var pk = elem.getAttribute('name');
                 
                 $.ajax({
-                    type: "POST",
+                    type:"POST",
                     url: "{% url 'accounts:follow' %}",
                     data: {
                         'pk': pk,
@@ -129,22 +130,99 @@
                     },
                     dataType: "json",
                     success: function(response){
-                        // alert('성공!')
+                        console.log("성공");
                         if(response.status){
                             document.querySelector('input.follow[name=\''+pk+'\']').value="팔로잉";
                         }else{
                             document.querySelector('input.follow[name=\''+pk+'\']').value="팔로우";
                         }
-                    
                     },
                     error: function(request, status, error){
                         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                     }
-                }) 
+                })
             }
-        elem.classList.toggle('on');
-    }
-    delegation.addEventListener('click', delegationFunc);
-
-})();
-</script>
+            elem.classList.toggle('on');
+        }
+        
+        
+        function resizefunc(){
+            // console.log('리사이즈')
+            if(pageYOffset >= 10){
+                let calcWidth = (window.innerWidth * 0.5) + 167;
+                if(side_box){
+                    side_box.style.left = calcWidth + "px";
+                }
+            }
+        }
+        
+        function scrollfunc(){
+            var scrollHeight = pageYOffset + window.innerHeight;
+            var documentHeight = document.body.scrollHeight;
+            
+            if (pageYOffset >= 10){
+                header.classList.add('on');
+                resizefunc();
+                if(side_box){
+                    side_box.classList.add('on');
+                }
+            } else {
+                header.classList.remove('on');
+                if(side_box){
+                    side_box.classList.remove('on');
+                    side_box.removeAttribute('style');
+                }
+            }
+            
+            if(scrollHeight >= documentHeight){
+                var page = document.querySelector('#page').value;
+                
+                console.log(page);
+                
+                var end_page = {{ posts.paginator.num_pages }}
+                if(page > end_page){
+                    return;
+                }
+                document.querySelector('#page').value = parseInt(page) + 1;
+                callMorePostAjax(page);
+            }
+        }
+        
+        function callMorePostAjax(page) {
+            var end_page = {{ posts.paginator.num_pages }};
+            
+            
+            
+            if(page > end_page){
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'post:post_list' %}",
+                data: {
+                    'page': page,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                dataType: 'html',
+                success: addMorePostAjax,
+                error: function(request, status, error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            });
+        }
+     
+        function addMorePostAjax(data, textStatus, jqXHR) {
+        let post = document.querySelector('#post_list_ajax');
+            
+            post.insertAdjacentHTML("beforeend", data);
+            
+            
+        }
+    
+    
+        window.addEventListener('resize', resizefunc);
+        window.addEventListener('scroll', scrollfunc);
+        delegation.addEventListener('click', delegationFunc);
+    })();
+    </script>
+    
