@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment
+from .models import Post, Comment, Tag
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm, CommentForm
 from django.contrib import messages
@@ -12,10 +13,21 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 # Create your views here.
 def post_list(request, tag=None):
     posts = Post.objects.all()
-    comment_form = CommentForm()
     post_list = Post.objects.all()
+    comment_form = CommentForm()
     paginator = Paginator(post_list, 3)
     page_num = request.POST.get('get')
+
+    if tag:
+        post_list = Post.objects.filter(tag_set__name__iexact=tag) \
+            .prefetch_related('tag_set', 'like_user_set__profile', 'comment_set__author__profile',
+                          'author__profile__follower_user', 'author__profile__follower_user__from_user').select_related('author__profile')
+    else:
+        post_list = Post.objects.all() \
+            .prefetch_related('tag_set', 'like_user_set__profile', 'comment_set__author__profile',
+                              'author__profile__follower_user', 'author__profile__follower_user__from_user', ) \
+            .select_related('author__profile', )
+        
 
     try:
         posts = paginator.page(page_num)
@@ -29,6 +41,11 @@ def post_list(request, tag=None):
             'posts': posts,
             'comment_form': comment_form,
         })
+    if request.method == 'POST':
+        tag = request.POST.get('tag')
+        tag_clean = ''.join(e for e in tag if e.isalnum())
+        return redirect('post:post_search', tag_clean)
+
 
     if request.user.is_authenticated:
         username = request.user
@@ -79,8 +96,8 @@ def post_edit(request, pk):
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save()
-            #post.tag_set.clear()
-            #post.tag_save()
+            post.tag_set.clear()
+            post.tag_save()
             messages.success(request, '수정완료')
             return redirect('post:post_list')
     else:
